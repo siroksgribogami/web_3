@@ -1,3 +1,4 @@
+HEAD
 Variant 18 — Periodic Image Transform (FastAPI)
 
 This small FastAPI app implements lab variant 18: it multiplies an uploaded image by a periodic function (sin or cos) along either the vertical or horizontal axis with a user-specified period. The app returns the processed image and color histograms for original and processed images.
@@ -44,3 +45,6 @@ Next steps (suggestions):
 - Add input validation and size limits.
 - Add option to use both axes (variant 19 style) or change amplitude/offset.
 - Add better styling and sample images in `static/`.
+=======
+
+3bed77760820c6e8d91b414221d8b9b19b6b8ac8
