@@ -21,26 +21,61 @@ app = FastAPI()
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
+# If a top-level svg_elements folder exists (project root), expose it at /svg_elements
+ALT_SVG_DIR = os.path.join(BASE_DIR, 'svg_elements')
+if os.path.isdir(ALT_SVG_DIR):
+    app.mount('/svg_elements', StaticFiles(directory=ALT_SVG_DIR), name='svg_elements')
+
 
 def _get_flowers():
-    """Scan static/svg_elements for .svg files and produce randomized positions.
-    Returns a list of dicts: {url, top, left, size, rotate, opacity}.
+    """Сканирует каталоги с SVG-цветами и возвращает список декораций.
+    Локации поиска по приоритету:
+      1) static/svg_elements (если есть и в нём есть .svg)
+      2) svg_elements в корне проекта (если есть и в нём есть .svg)
+
+    Возвращает список словарей:
+      {url, top, left, size, rotate, opacity}
     """
-    svg_dir = os.path.join(STATIC_DIR, 'svg_elements')
     flowers = []
-    if os.path.isdir(svg_dir):
-        files = [f for f in os.listdir(svg_dir) if f.lower().endswith('.svg')]
-        max_items = min(18, len(files))  # limit to avoid overdraw
-        chosen = files[:max_items]
-        for name in chosen:
-            flowers.append({
-                'url': f'/static/svg_elements/{name}',
-                'top': random.randint(0, 85),   # percent
-                'left': random.randint(0, 85),  # percent
-                'size': random.randint(64, 160),  # px
-                'rotate': random.randint(0, 360),
-                'opacity': round(random.uniform(0.15, 0.35), 2),
-            })
+
+    def list_svgs(dir_path: str):
+        try:
+            return [f for f in os.listdir(dir_path) if f.lower().endswith('.svg')]
+        except Exception:
+            return []
+
+    static_svg_dir = os.path.join(STATIC_DIR, 'svg_elements')
+
+    # 1) Пытаемся взять из static/svg_elements
+    files = []
+    url_prefix = '/static/svg_elements'
+    if os.path.isdir(static_svg_dir):
+        files = list_svgs(static_svg_dir)
+
+    # 2) Если файлов нет, пробуем корень проекта svg_elements
+    if not files and os.path.isdir(ALT_SVG_DIR):
+        files = list_svgs(ALT_SVG_DIR)
+        url_prefix = '/svg_elements'
+
+    # Если всё равно пусто — возвращаем пустой список (ничего не рисуем)
+    if not files:
+        return flowers
+
+    # Немного перемешаем, чтобы картинки были разнообразны
+    random.shuffle(files)
+
+    # Разрешим дублирование: берем до 22 элементов, повторяя список при необходимости
+    target_count = min(22, max(8, len(files)))
+    while len(flowers) < target_count:
+        name = random.choice(files)
+        flowers.append({
+            'url': f'{url_prefix}/{name}',
+            'top': random.randint(0, 85),
+            'left': random.randint(0, 85),
+            'size': random.randint(72, 180),
+            'rotate': random.randint(0, 360),
+            'opacity': round(random.uniform(0.28, 0.6), 2),
+        })
     return flowers
 
 
@@ -58,18 +93,18 @@ async def process(request: Request,
                   orientation: str = Form('vertical')):
     # validate inputs
     if func not in ('sin', 'cos'):
-        raise HTTPException(status_code=400, detail='func must be sin or cos')
+        raise HTTPException(status_code=400, detail='параметр func должен быть sin или cos')
     if orientation not in ('vertical', 'horizontal'):
-        raise HTTPException(status_code=400, detail='orientation must be vertical or horizontal')
+        raise HTTPException(status_code=400, detail='параметр orientation должен быть vertical или horizontal')
     if period <= 0:
-        raise HTTPException(status_code=400, detail='period must be > 0')
+        raise HTTPException(status_code=400, detail='параметр period должен быть > 0')
 
     # read uploaded file into PIL Image
     contents = await file.read()
     try:
         img = Image.open(io.BytesIO(contents)).convert('RGB')
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Invalid image file: {e}')
+        raise HTTPException(status_code=400, detail=f'Неверный файл изображения: {e}')
 
     # save original
     uid = uuid.uuid4().hex
@@ -88,8 +123,8 @@ async def process(request: Request,
     hist_proc = f'hist_proc_{uid}.png'
     hist_orig_path = os.path.join(STATIC_DIR, hist_orig)
     hist_proc_path = os.path.join(STATIC_DIR, hist_proc)
-    image_ops.save_histogram(img, hist_orig_path, title='Original image color histograms')
-    image_ops.save_histogram(processed, hist_proc_path, title='Processed image color histograms')
+    image_ops.save_histogram(img, hist_orig_path, title='Гистограммы цветов — оригинал')
+    image_ops.save_histogram(processed, hist_proc_path, title='Гистограммы цветов — обработано')
 
     # build urls
     base = request.base_url._url.rstrip('/')

@@ -1,5 +1,5 @@
-"""Image operations: apply periodic multiplier (sin/cos) along vertical or horizontal axis
-and helper to save color histograms.
+"""Операции с изображениями: умножение по оси на периодическую функцию (sin/cos)
+и вспомогательная функция для сохранения цветовых гистограмм.
 """
 from PIL import Image
 import numpy as np
@@ -8,19 +8,19 @@ import matplotlib.pyplot as plt
 
 def apply_periodic(pil_image: Image.Image, period: float, func: str = 'sin', orientation: str = 'vertical') -> Image.Image:
     """
-    Multiply each pixel by a periodic function along one axis.
-    - period: period in pixels
-    - func: 'sin' or 'cos'
-    - orientation: 'vertical' -> vary along Y (rows), 'horizontal' -> vary along X (cols)
-    The function is normalized to [0,1]: 0.5*(1 + sin(2*pi*coord/period))
-    Returns a new PIL.Image (RGB).
+    Умножает каждый пиксель на периодическую функцию вдоль выбранной оси.
+    - period: период в пикселях
+    - func: 'sin' или 'cos'
+    - orientation: 'vertical' — изменение по Y (строки), 'horizontal' — по X (столбцы)
+    Функция нормализуется в диапазон [0,1]: 0.5*(1 + sin(2*pi*coord/period)).
+    Возвращает новый объект PIL.Image (RGB).
     """
     if func not in ('sin', 'cos'):
-        raise ValueError('func must be sin or cos')
+        raise ValueError('параметр func должен быть "sin" или "cos"')
     if orientation not in ('vertical', 'horizontal'):
-        raise ValueError('orientation must be vertical or horizontal')
+        raise ValueError('параметр orientation должен быть "vertical" или "horizontal"')
     if period <= 0:
-        raise ValueError('period must be > 0')
+        raise ValueError('параметр period должен быть > 0')
 
     arr = np.asarray(pil_image).astype(np.float32)  # H x W x 3
     H, W = arr.shape[:2]
@@ -50,7 +50,7 @@ def apply_periodic(pil_image: Image.Image, period: float, func: str = 'sin', ori
 
 
 def save_histogram(pil_image: Image.Image, out_path: str, title: str = None):
-    """Save color histograms (R,G,B) into out_path (PNG)."""
+    """Сохранить цветовые гистограммы (R,G,B) в файл out_path (PNG)."""
     arr = np.asarray(pil_image)
     if arr.ndim == 3 and arr.shape[2] >= 3:
         r = arr[:, :, 0].ravel()

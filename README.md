@@ -1,20 +1,22 @@
-HEAD
-Variant 18 — Periodic Image Transform (FastAPI)
+Вариант 18 — Периодическое преобразование изображения (FastAPI)
 
-This small FastAPI app implements lab variant 18: it multiplies an uploaded image by a periodic function (sin or cos) along either the vertical or horizontal axis with a user-specified period. The app returns the processed image and color histograms for original and processed images.
+Небольшое веб‑приложение на FastAPI для выполнения лабораторной работы (вариант 18):
+загруженное изображение умножается на периодическую функцию (sin или cos) вдоль выбранной оси
+(вертикально или горизонтально) с заданным пользователем периодом. Приложение возвращает
+обработанное изображение и цветовые гистограммы для оригинала и результата.
 
-Files added:
-- `app.py` — FastAPI application and routes
-- `image_ops.py` — image processing utilities (apply_periodic, save_histogram)
-- `templates/index.html` — upload form
-- `templates/result.html` — result page
-- `static/styles.css` — minimal styling
-- `requirements.txt` — Python dependencies
-- `tests/test_image_ops.py` — unit test for processing function
+Содержимое проекта:
+- `app.py` — приложение FastAPI и маршруты
+- `image_ops.py` — утилиты обработки изображений (`apply_periodic`, `save_histogram`)
+- `templates/index.html` — форма загрузки и параметры
+- `templates/result.html` — страница результата
+- `static/styles.css` — стили
+- `requirements.txt` — зависимости Python
+- `tests/test_image_ops.py` — юнит‑тест для функции обработки
 
-How to run locally (recommended inside a virtualenv):
+Как запустить локально (рекомендуется использовать виртуальное окружение):
 
-1) Create and activate a virtual environment (Windows PowerShell example):
+1) Создайте и активируйте виртуальное окружение (пример для PowerShell):
 
 ```powershell
 python -m venv .venv
@@ -22,29 +24,28 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-2) Start the app with uvicorn:
+2) Запустите сервер uvicorn:
 
 ```powershell
 python -m uvicorn app:app --reload --host 127.0.0.1 --port 8000
 ```
 
-3) Open http://127.0.0.1:8000 in your browser, upload an image and set parameters.
+3) Откройте в браузере http://127.0.0.1:8000 — загрузите изображение и задайте параметры.
 
-Run tests:
+Запуск тестов:
 
 ```powershell
 python -m pytest -q
 ```
 
-Notes and assumptions:
-- The periodic multiplier is normalized to [0,1] using 0.5*(1+sin/cos(...)), so no negative values.
-- The UI is minimal and intended as a functional prototype for the lab assignment.
-- If you plan to deploy, consider cleaning up old files in `static/` and adding limits on upload size.
+Примечания и оговорки:
+- Множитель нормализуется в диапазон [0,1] через формулу 0.5*(1 + sin/cos(...)), поэтому
+	отрицательных значений не возникает.
+- Интерфейс сделан минимальным как прототип для лабораторной работы.
+- Для продакшн‑использования стоит добавить ограничения на размер загрузки и очистку старых файлов
+	в папке `static/`.
 
-Next steps (suggestions):
-- Add input validation and size limits.
-- Add option to use both axes (variant 19 style) or change amplitude/offset.
-- Add better styling and sample images in `static/`.
-=======
-
-3bed77760820c6e8d91b414221d8b9b19b6b8ac8
+Рекомендации по развитию:
+- Добавить валидацию входных данных и ограничения размера.
+- Добавить опцию обработки по обеим осям или изменение амплитуды/смещения.
+- Дополнить стиль и примеры изображений в `static/`.

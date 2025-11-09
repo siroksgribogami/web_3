@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Variant 18 — Periodic Image Transform</title>
+  <title>Вариант 18 — Периодическое преобразование изображения</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body class="theme-pastel">
@@ -18,24 +22,24 @@
 
   <main class="container">
     <header>
-      <h1 class="brand">PERIODIC IMAGE TRANSFORM</h1>
-      <p class="subtitle">миленький фронтенд с периодической модуляцией картинки</p>
+      <h1 class="brand">ПЕРИОДИЧЕСКОЕ ПРЕОБРАЗОВАНИЕ</h1>
+      <p class="subtitle">милый интерфейс для периодической модуляции изображения</p>
     </header>
 
     <section class="card">
       <form action="/" enctype="multipart/form-data" method="post" class="form-grid">
         <label class="field">
-          <span>image</span>
+          <span>изображение</span>
           <input type="file" name="file" accept="image/*" required>
         </label>
 
         <label class="field">
-          <span>period (px)</span>
+          <span>период (px)</span>
           <input type="number" name="period" value="100" min="1" step="1" required>
         </label>
 
         <label class="field">
-          <span>function</span>
+          <span>функция</span>
           <select name="func">
             <option value="sin">sin</option>
             <option value="cos">cos</option>
@@ -43,20 +47,20 @@
         </label>
 
         <label class="field">
-          <span>orientation</span>
+          <span>ориентация</span>
           <select name="orientation">
-            <option value="vertical">vertical</option>
-            <option value="horizontal">horizontal</option>
+            <option value="vertical">вертикально</option>
+            <option value="horizontal">горизонтально</option>
           </select>
         </label>
 
         <div class="actions">
-          <button class="btn-primary" type="submit">process</button>
+          <button class="btn-primary" type="submit">обработать</button>
         </div>
       </form>
     </section>
 
-    <footer class="note">после загрузки вы получите обработанное изображение и гистограммы цветов</footer>
+  <footer class="note">после загрузки вы получите обработанное изображение и гистограммы цветов</footer>
   </main>
   <script>
     // Apply flower positions from data- attributes to avoid Jinja inside inline CSS

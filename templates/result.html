@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Result — Periodic Transform</title>
+  <title>Результат — Периодическое преобразование</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body class="theme-pastel">
@@ -16,33 +20,33 @@
   </div>
   <main class="container">
     <header>
-      <h1 class="brand">RESULT</h1>
-      <p class="subtitle">function: {{ func }} · orientation: {{ orientation }} · period: {{ period }}</p>
+      <h1 class="brand">РЕЗУЛЬТАТ</h1>
+      <p class="subtitle">функция: {{ func }} · ориентация: {{ orientation }} · период: {{ period }}</p>
     </header>
 
     <section class="gallery">
       <div class="panel">
-        <h2 class="panel-title">original</h2>
-        <img src="{{ orig_url }}" alt="original" class="preview" />
+  <h2 class="panel-title">оригинал</h2>
+  <img src="{{ orig_url }}" alt="оригинал" class="preview" />
       </div>
       <div class="panel">
-        <h2 class="panel-title">processed</h2>
-        <img src="{{ proc_url }}" alt="processed" class="preview" />
+  <h2 class="panel-title">обработано</h2>
+  <img src="{{ proc_url }}" alt="обработанное" class="preview" />
       </div>
     </section>
 
     <section class="histograms">
       <div class="panel">
-        <h2 class="panel-title">original histograms</h2>
-        <img src="{{ hist_orig_url }}" alt="hist original" class="hist-img" />
+  <h2 class="panel-title">гистограммы (оригинал)</h2>
+  <img src="{{ hist_orig_url }}" alt="гистограмма оригинала" class="hist-img" />
       </div>
       <div class="panel">
-        <h2 class="panel-title">processed histograms</h2>
-        <img src="{{ hist_proc_url }}" alt="hist processed" class="hist-img" />
+  <h2 class="panel-title">гистограммы (обработано)</h2>
+  <img src="{{ hist_proc_url }}" alt="гистограмма обработанного" class="hist-img" />
       </div>
     </section>
     <div class="actions">
-      <a class="btn-primary" href="/">again</a>
+  <a class="btn-primary" href="/">ещё раз</a>
     </div>
   </main>
   <script>
