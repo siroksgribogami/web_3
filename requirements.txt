@@ -1,0 +1,8 @@
+fastapi>=0.70
+uvicorn[standard]>=0.15
+jinja2
+python-multipart
+Pillow
+numpy
+matplotlib
+pytest

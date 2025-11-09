@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Result — Periodic Transform</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="theme-pastel">
+  <div class="flowers-canvas" aria-hidden="true">
+    {% if flowers %}
+      {% for f in flowers %}
+        <img class="flower" src="{{ f.url }}" alt="" data-top="{{ f.top }}" data-left="{{ f.left }}" data-size="{{ f.size }}" data-rotate="{{ f.rotate }}" data-opacity="{{ f.opacity }}" />
+      {% endfor %}
+    {% endif %}
+  </div>
+  <main class="container">
+    <header>
+      <h1 class="brand">RESULT</h1>
+      <p class="subtitle">function: {{ func }} · orientation: {{ orientation }} · period: {{ period }}</p>
+    </header>
+
+    <section class="gallery">
+      <div class="panel">
+        <h2 class="panel-title">original</h2>
+        <img src="{{ orig_url }}" alt="original" class="preview" />
+      </div>
+      <div class="panel">
+        <h2 class="panel-title">processed</h2>
+        <img src="{{ proc_url }}" alt="processed" class="preview" />
+      </div>
+    </section>
+
+    <section class="histograms">
+      <div class="panel">
+        <h2 class="panel-title">original histograms</h2>
+        <img src="{{ hist_orig_url }}" alt="hist original" class="hist-img" />
+      </div>
+      <div class="panel">
+        <h2 class="panel-title">processed histograms</h2>
+        <img src="{{ hist_proc_url }}" alt="hist processed" class="hist-img" />
+      </div>
+    </section>
+    <div class="actions">
+      <a class="btn-primary" href="/">again</a>
+    </div>
+  </main>
+  <script>
+    // Apply flower positions from data- attributes to avoid Jinja inside inline CSS
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.flower').forEach(function(el){
+        const top = el.dataset.top || 0;
+        const left = el.dataset.left || 0;
+        const size = el.dataset.size || 100;
+        const rotate = el.dataset.rotate || 0;
+        const opacity = el.dataset.opacity || 0.25;
+        el.style.top = top + '%';
+        el.style.left = left + '%';
+        el.style.width = size + 'px';
+        el.style.transform = 'rotate(' + rotate + 'deg)';
+        el.style.opacity = opacity;
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+/* Font face: Kontrabanda (user will supply actual font files) */
+@font-face {
+	font-family: 'Kontrabanda';
+	src: url('/static/fonts/Kontrabanda.woff2') format('woff2'),
+			 url('/static/fonts/Kontrabanda.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
+
+html, body { height: 100%; }
+body.theme-pastel {
+	margin: 0;
+	font-family: 'Kontrabanda', Arial, sans-serif;
+	background: #FFD1DC;
+	color: #0D00FF;
+	overflow-x: hidden;
+}
+
+/* Decorative flower canvas */
+.flowers-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+.flower { position: absolute; filter: blur(0.4px); transition: transform 6s linear; }
+.flower:hover { transform: scale(1.05); }
+
+/* Layout */
+.container { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+header { text-align: center; margin-bottom: 32px; }
+.brand { font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: 2px; margin: 0 0 8px; text-transform: uppercase; }
+.subtitle { font-size: 1rem; margin: 0; opacity: 0.85; text-transform: lowercase; }
+
+/* Card */
+.card { background: #ffffffaa; backdrop-filter: blur(6px); border: 2px solid #0D00FF; border-radius: 28px; padding: 32px 32px 40px; box-shadow: 0 8px 24px rgba(13,0,255,0.25); }
+
+/* Form grid */
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; letter-spacing: 0.5px; }
+.field span { text-transform: lowercase; font-weight: 600; }
+.field input[type='file'],
+.field input[type='number'],
+.field select { padding: 10px 12px; border: 2px solid #0D00FF; border-radius: 14px; background: #fff; color: #0D00FF; font-family: inherit; font-size: 0.9rem; }
+.field input:focus, .field select:focus { outline: 3px solid #0D00FF55; }
+
+.actions { display: flex; align-items: center; justify-content: center; margin-top: 8px; }
+.btn-primary { background: #0D00FF; color: #FFD1DC; border: none; padding: 14px 28px; border-radius: 50px; font-size: 0.95rem; cursor: pointer; letter-spacing: 1px; text-decoration: none; text-transform: lowercase; box-shadow: 0 4px 12px rgba(13,0,255,0.35); transition: background 0.3s, transform 0.3s; }
+.btn-primary:hover { background: #1205d4; transform: translateY(-3px); }
+.btn-primary:active { transform: translateY(0); }
+
+footer.note { margin-top: 28px; font-size: 0.75rem; text-align: center; opacity: 0.7; }
+
+/* Result page panels */
+.gallery, .histograms { display: grid; gap: 32px; margin-top: 32px; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); }
+.panel { background: #ffffffcc; border: 2px solid #0D00FF; border-radius: 24px; padding: 24px; position: relative; overflow: hidden; }
+.panel-title { margin: 0 0 12px; font-size: 1.1rem; text-transform: lowercase; letter-spacing: 1px; }
+.preview, .hist-img { width: 100%; border-radius: 16px; border: 2px solid #0D00FF; display: block; background: #fff; }
+
+/* Scrollbar styling (webkit) */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #FFD1DC; }
+::-webkit-scrollbar-thumb { background: #0D00FF; border-radius: 20px; }
+::-webkit-scrollbar-thumb:hover { background: #1605d4; }
+
+@media (max-width: 640px) {
+	.card { padding: 24px 20px 32px; }
+	.brand { font-size: 2.2rem; }
+	.panel { padding: 18px; }
+}
+
+/* Simple fade for flowers */
+@keyframes drift {
+	0% { transform: translateY(0) rotate(0deg); }
+	50% { transform: translateY(-8px) rotate(180deg); }
+	100% { transform: translateY(0) rotate(360deg); }
+}
+.flower { animation: drift 30s linear infinite; }
+

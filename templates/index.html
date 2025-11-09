@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Variant 18 — Periodic Image Transform</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="theme-pastel">
+  <!-- Decorative flowers background -->
+  <div class="flowers-canvas" aria-hidden="true">
+    {% if flowers %}
+      {% for f in flowers %}
+        <img class="flower" src="{{ f.url }}" alt="" data-top="{{ f.top }}" data-left="{{ f.left }}" data-size="{{ f.size }}" data-rotate="{{ f.rotate }}" data-opacity="{{ f.opacity }}" />
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <main class="container">
+    <header>
+      <h1 class="brand">PERIODIC IMAGE TRANSFORM</h1>
+      <p class="subtitle">миленький фронтенд с периодической модуляцией картинки</p>
+    </header>
+
+    <section class="card">
+      <form action="/" enctype="multipart/form-data" method="post" class="form-grid">
+        <label class="field">
+          <span>image</span>
+          <input type="file" name="file" accept="image/*" required>
+        </label>
+
+        <label class="field">
+          <span>period (px)</span>
+          <input type="number" name="period" value="100" min="1" step="1" required>
+        </label>
+
+        <label class="field">
+          <span>function</span>
+          <select name="func">
+            <option value="sin">sin</option>
+            <option value="cos">cos</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>orientation</span>
+          <select name="orientation">
+            <option value="vertical">vertical</option>
+            <option value="horizontal">horizontal</option>
+          </select>
+        </label>
+
+        <div class="actions">
+          <button class="btn-primary" type="submit">process</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="note">после загрузки вы получите обработанное изображение и гистограммы цветов</footer>
+  </main>
+  <script>
+    // Apply flower positions from data- attributes to avoid Jinja inside inline CSS
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.flower').forEach(function(el){
+        const top = el.dataset.top || 0;
+        const left = el.dataset.left || 0;
+        const size = el.dataset.size || 100;
+        const rotate = el.dataset.rotate || 0;
+        const opacity = el.dataset.opacity || 0.25;
+        el.style.top = top + '%';
+        el.style.left = left + '%';
+        el.style.width = size + 'px';
+        el.style.transform = 'rotate(' + rotate + 'deg)';
+        el.style.opacity = opacity;
+      });
+    });
+  </script>
+</body>
+</html>

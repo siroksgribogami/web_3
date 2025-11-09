@@ -1,0 +1,3 @@
+Place your flower SVGs exported from Figma here,
+for example: flower1.svg, flower2.svg, ...
+They will be picked up automatically and placed randomly in the background.

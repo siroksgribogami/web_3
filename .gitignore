@@ -1,0 +1,17 @@
+/.venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+env/
+venv/
+/.env
+/.vscode/
+*.sqlite3
+methodichka_lab3.md
+qodo*
+*.log
+/.idea/
+dist/
+build/
+*.egg-info/
