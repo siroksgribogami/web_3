@@ -6,3 +6,5 @@ Pillow
 numpy
 matplotlib
 pytest
+
+gunicorn
